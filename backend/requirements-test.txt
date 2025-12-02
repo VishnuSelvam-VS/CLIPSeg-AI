@@ -1,0 +1,2 @@
+# Test dependencies (in addition to main requirements)
+requests

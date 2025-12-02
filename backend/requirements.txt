@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+transformers
+torch
+Pillow
+python-multipart
+numpy
+opencv-python
+requests
+ultralytics
