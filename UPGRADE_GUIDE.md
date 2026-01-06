@@ -28,19 +28,17 @@ This document outlines the strategic roadmap for evolving the CLIPSeg AI project
 ## 🎨 Phase 2: The "AI Editor" Upgrade (Generative AI)
 *Focus: Transforming from segmentation to creation.*
 
-### 4. Generative Inpainting (Object Replacement)
-**Goal**: Replace segmented objects with new AI-generated content.
-- **Feature**: "Replace Object" (e.g., select "cat", type "tiger").
-- **Technical Implementation**:
-  - Use CLIPSeg mask as an Inpainting Mask.
-  - Integrate **Hugging Face Diffusers** (Stable Diffusion Inpainting).
+### ✅ 4. Generative Fill (AI Inpainting)
+**Status: Completed**
+- **Feature**: "Fill with AI" in Studio Mode.
+- **Tech**: Integrated **Stable Diffusion XL (SDXL) Inpainting**.
+- **Requirements**: Requires GPU (CUDA) and `diffusers` library.
+- **Usage**: Select an area -> type prompt -> AI generates new content seamlessly blending with the image.
 
-### 5. Smart Blur (Bokeh Effect)
-**Goal**: Professional photography effects.
-- **Feature**: "Portrait Mode."
-- **Technical Implementation**:
-  - Invert the segmentation mask.
-  - Apply Gaussian Blur (`cv2.GaussianBlur`) to the background area only.
+### ✅ 5. Studio Effects (Smart Blur & Glow)
+**Status: Completed**
+- **Feature**: "Atmosphere" and "Effects" controls.
+- **Tech**: Frontend-based CV filters (Blur, Shadow, Glow).
 
 ---
 
@@ -49,12 +47,13 @@ This document outlines the strategic roadmap for evolving the CLIPSeg AI project
 
 ### ✅ 6. GPU Acceleration & Optimization
 **Status: Completed**
-- **Feature**: Automatic GPU detection.
-- **Tech**: Updated `main.py` to use `torch.cuda.is_available()`.
+- **Feature**: Automatic GPU detection (CUDA).
+- **Tech**: Backend dynamically loads models based on `torch.cuda.is_available()`.
 
-### 7. Dockerization (Easy Deploy)
-**Goal**: Professional deployment standard.
-- **Feature**: `docker-compose.yml` for one-command startup.
+### ✅ 7. Automation & Batch Processing
+**Status: Completed**
+- **Feature**: Watch folder `raw_images` -> Auto-process to `processed`.
+- **Tech**: Python script (`workflow_scripts/auto_remove_bg.py`) with filesystem monitoring.
 
 ---
 
@@ -71,7 +70,7 @@ This document outlines the strategic roadmap for evolving the CLIPSeg AI project
 - **Feature**: Added Sensitivity Slider (0.1 - 0.9).
 - **Tech**: Frontend state + Backend parameter.
 
-### 10. History & Gallery
-**Goal**: Session persistence.
-- **Feature**: Sidebar showing last 5 generated images.
-- **Tech**: Save Base64 images in browser `localStorage`.
+### ✅ 10. Gallery View
+**Status: Completed**
+- **Feature**: "Batch Gallery" to view and download processed images.
+- **Tech**: Backend `/gallery` endpoint + React Grid View.

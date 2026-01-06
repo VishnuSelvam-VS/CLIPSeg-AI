@@ -6,6 +6,9 @@ __pycache__/
 .Python
 env/
 venv/
+venv311/
+processed/
+raw_images/
 ENV/
 build/
 develop-eggs/
@@ -39,15 +42,39 @@ dist-ssr/
 *.swp
 *.swo
 *~
+.project
+.settings/
 
 # OS
 .DS_Store
 Thumbs.db
+Desktop.ini
 
 # Model weights (auto-downloaded)
 weights/
 *.pth
+*.pt
+sam*.pt
 
-# Uploads
+# Uploads and temp files
 uploads/
 temp/
+*.tmp
+
+# Test outputs
+test_*.png
+result_*.png
+batch_*.png
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Cache
+.cache/
+*.cache

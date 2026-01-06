@@ -1,0 +1,26 @@
+# Helper files
+.git
+.gitignore
+.dockerignore
+DEPLOYMENT.md
+FREE_HOSTING.md
+start_app.ps1
+README.md
+PROJECT_OVERVIEW.md
+PROJECT_COMPLETE.md
+EXAMPLES.md
+UPGRADE_GUIDE.md
+QUICKSTART.md
+
+# Dependencies
+backend/venv
+frontend/node_modules
+
+# Large model files (they will be downloaded by the app if missing, keeps upload small)
+# Uncomment these if you want to upload your local models instead of downloading them
+# *.pt
+# *.pth
+
+# Build artifacts
+frontend/dist
+backend/__pycache__
