@@ -8,3 +8,7 @@ numpy
 opencv-python
 requests
 ultralytics
+diffusers
+accelerate
+safetensors
+scipy
