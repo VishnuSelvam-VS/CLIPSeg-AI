@@ -1,3 +1,15 @@
+import os
+# WORKAROUND: Fix for "SSLCertVerificationError" on some networks/machines
+# This allows downloading models from HuggingFace even if SSL certs are missing or blocked.
+os.environ['CURL_CA_BUNDLE'] = ''
+import ssl
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -68,26 +80,28 @@ try:
     
     # Select Model based on Device (Avoid OOM on CPU)
     if torch.cuda.is_available():
-        print("🚀 GPU detected: Loading SDXL Inpainting (High Quality)...")
-        model_id = "diffusers/stable-diffusion-xl-1.0-inpainting-0.1"
+        print("🚀 GPU detected: Loading SD 1.5 Inpainting (Fast Mode)...")
+        # SDXL is too slow (10+ sec), using SD 1.5 (~2 sec)
+        model_id = "runwayml/stable-diffusion-inpainting" 
         dtype = torch.float16
         variant = "fp16"
-        IS_SDXL = True
+        IS_SDXL = False
         use_safe = True
     else:
         print("🐢 CPU detected: Loading SD 1.5 Inpainting (Lighter/Faster)...")
-        # SDXL is too heavy for most CPUs/RAM, use standard SD 1.5
         model_id = "runwayml/stable-diffusion-inpainting"
         dtype = torch.float32
         variant = None
         IS_SDXL = False
-        use_safe = False # generic fallback
+        use_safe = False
         
     sdxl_pipe = AutoPipelineForInpainting.from_pretrained(
         model_id,
         torch_dtype=dtype,
         variant=variant,
-        use_safetensors=use_safe
+        use_safetensors=use_safe,
+        safety_checker=None, # Disable for speed & false positives
+        requires_safety_checker=False
     )
 
     # Use DPM++ 2M Karras Scheduler (Faster & Better Quality)
@@ -99,7 +113,13 @@ try:
     
     # Speed Optimizations
     if torch.cuda.is_available():
-        sdxl_pipe.enable_model_cpu_offload()
+        # For SD 1.5 (smaller model), we try to keep it in VRAM for instant response
+        # Only offload if VRAM is very tight (< 4GB)
+        try:
+            sdxl_pipe.to(device)
+        except:
+            sdxl_pipe.enable_model_cpu_offload()
+            
         sdxl_pipe.enable_vae_slicing()
         try:
             sdxl_pipe.enable_xformers_memory_efficient_attention()

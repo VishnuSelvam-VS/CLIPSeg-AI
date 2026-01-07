@@ -570,7 +570,7 @@ function App() {
       formData.append('mask', maskBlob, 'mask.png');
       formData.append('prompt', genFillPrompt);
       formData.append('strength', genFillStrength);
-      formData.append('steps', 25);
+      formData.append('steps', 20);
 
       const response = await fetch('/generative-fill', {
         method: 'POST',

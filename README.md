@@ -1,3 +1,13 @@
+---
+title: CLIPSeg AI
+emoji: 🖼️
+colorFrom: purple
+colorTo: blue
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # CLIPSeg AI - Advanced Image Segmentation & Editing
 
 A professional-grade web application for zero-shot image segmentation and editing. Combine the power of **CLIPSeg** (text understanding) and **SAM** (Segment Anything Model) for pixel-perfect results.

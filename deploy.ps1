@@ -30,6 +30,8 @@ Write-Host "Syncing files to $spaceDir..." -ForegroundColor Cyan
 # Root files
 Copy-Item "Dockerfile" "$spaceDir\Dockerfile" -Force
 if (Test-Path ".dockerignore") { Copy-Item ".dockerignore" "$spaceDir\.dockerignore" -Force }
+Copy-Item "README.md" "$spaceDir\README.md" -Force
+if (Test-Path "UPGRADE_GUIDE.md") { Copy-Item "UPGRADE_GUIDE.md" "$spaceDir\UPGRADE_GUIDE.md" -Force }
 
 # 4. Git Operations
 Set-Location $spaceDir
