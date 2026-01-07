@@ -1088,7 +1088,7 @@ function App() {
         {/* Footer */}
         <div className="mt-6 flex justify-between items-center text-[10px] text-slate-600 uppercase tracking-widest font-medium">
           <p>Privacy • Terms</p>
-          <p>Built with ❤️ by You</p>
+          <p>Built with ❤️ by Vishnu</p>
         </div>
 
       </div>
